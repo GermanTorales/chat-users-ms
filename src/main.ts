@@ -1,13 +1,15 @@
-import * as morgan from 'morgan';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
+import { morganSuccessHandler, morganErrorHandler } from './infraestructure/configurations/morgan';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(morgan('combined'));
+  app.use(morganSuccessHandler);
+  app.use(morganErrorHandler);
+
   app.useGlobalPipes(new ValidationPipe());
 
   const configService = app.get(ConfigService);
