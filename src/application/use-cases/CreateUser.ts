@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from 'src/domain/entities';
-import { Port } from 'src/domain/enums/ports';
+import { User } from '../../domain/entities';
+import { Port } from '../../domain/enums/ports';
 import { IUserRepository } from '../../domain/interfaces';
 import { CreateUserDTO } from '../dtos';
 import { UserAlreadyExistException } from '../../domain/exceptions/UserAlreadyExistException';
