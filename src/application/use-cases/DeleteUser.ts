@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Port } from 'src/domain/enums/ports';
+import { Port } from '../../domain/enums/ports';
 import { IUserRepository } from '../../domain/interfaces';
 
 @Injectable()
