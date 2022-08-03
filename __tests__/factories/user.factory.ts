@@ -13,6 +13,6 @@ export const createFakeUsersArray = (length = 10): User[] => {
   return [...new Array(length)].map((): User => {
     const { username, name } = createFakeUser();
 
-    return { username, name };
+    return { username, name, _id: faker.database.mongodbObjectId() };
   });
 };
