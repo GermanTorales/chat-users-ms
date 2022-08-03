@@ -1,11 +1,14 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
-import { UpdateUserDTO } from 'src/application/dtos';
-import { CreateUser, GetUser, GetAllUsers, DeleteUser, UpdateUser } from 'src/application/use-cases';
-import { UserAlreadyExistException } from 'src/domain/exceptions';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Logger, Param, Post, Put } from '@nestjs/common';
+import { UpdateUserDTO } from '../../application/dtos';
+import { CreateUser, GetUser, GetAllUsers, DeleteUser, UpdateUser } from '../../application/use-cases';
+import { UserAlreadyExistException } from '../../domain/exceptions';
 import { CreateUserDTO } from '../../application/dtos/createUser.dto';
+import { UserNotFoundException } from '../../domain/exceptions/UserNotFoundException';
 
 @Controller('users')
 export class UserController {
+  private readonly logger = new Logger(UserController.name);
+
   constructor(
     private getAllUsers: GetAllUsers,
     private createUser: CreateUser,
@@ -14,14 +17,24 @@ export class UserController {
     private updateUser: UpdateUser
   ) {}
 
+  @Get('/:id')
+  async one(@Param('id') id: string) {
+    try {
+      const user = await this.getUser.exec(id);
+
+      return user;
+    } catch (error) {
+      this.logger.error(error?.message);
+
+      if (error instanceof UserNotFoundException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
+
+      throw new HttpException('Server error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   @Get()
   async all() {
     return this.getAllUsers.exec();
-  }
-
-  @Get('/:id')
-  async one(@Param('id') id: string) {
-    return this.getUser.exec(id);
   }
 
   @Post()
@@ -31,6 +44,8 @@ export class UserController {
 
       return userCreated;
     } catch (error) {
+      this.logger.error(error?.message);
+
       if (error instanceof UserAlreadyExistException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
 
       throw new HttpException('Server error', HttpStatus.INTERNAL_SERVER_ERROR);

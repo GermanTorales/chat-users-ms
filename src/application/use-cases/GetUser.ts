@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
+import { UserNotFoundException } from '../../domain/exceptions';
 import { User } from '../../domain/entities';
 import { Port } from '../../domain/enums/ports';
 import { IUserRepository } from '../../domain/interfaces';
@@ -12,10 +13,12 @@ export class GetUser {
   async exec(_id: string): Promise<User> {
     this.logger.log('execute "exec" method');
 
-    const users = await this.userRepository.findOne(_id);
+    const user = await this.userRepository.findOne(_id);
+
+    if (!user) throw new UserNotFoundException(_id);
 
     this.logger.log(`user with ID ${_id} found`);
 
-    return users;
+    return user;
   }
 }
