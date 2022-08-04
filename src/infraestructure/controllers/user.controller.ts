@@ -54,7 +54,17 @@ export class UserController {
 
   @Put('/:id')
   async update(@Param('id') id: string, @Body() data: UpdateUserDTO) {
-    return this.updateUser.exec(id, data);
+    try {
+      const user = await this.updateUser.exec(id, data);
+
+      return user;
+    } catch (error) {
+      this.logger.error(error?.message);
+
+      if (error instanceof UserNotFoundException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
+
+      throw new HttpException('Server error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Delete('/:id')
