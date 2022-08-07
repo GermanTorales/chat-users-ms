@@ -11,13 +11,9 @@ export class GetUser {
   constructor(@Inject(Port.User) private readonly userRepository: IUserRepository) {}
 
   async exec(_id: string): Promise<User> {
-    this.logger.log('execute "exec" method');
-
     const user = await this.userRepository.findOne(_id);
 
-    if (!user) throw new UserNotFoundException(_id);
-
-    this.logger.log(`user with ID ${_id} found`);
+    if (!user) throw new UserNotFoundException({ userId: _id });
 
     return user;
   }

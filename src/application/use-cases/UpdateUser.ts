@@ -12,15 +12,11 @@ export class UpdateUser {
   constructor(@Inject(Port.User) private readonly userRepository: IUserRepository) {}
 
   async exec(_id: string, data: UpdateUserDTO): Promise<User> {
-    this.logger.log('execute "exec" method');
-
     const userExist = await this.userRepository.findOne(_id);
 
-    if (!userExist) throw new UserNotFoundException(_id);
+    if (!userExist) throw new UserNotFoundException({ userId: _id });
 
     const user = await this.userRepository.update(_id, data);
-
-    this.logger.log(`user with id ${_id} updated`);
 
     return user;
   }

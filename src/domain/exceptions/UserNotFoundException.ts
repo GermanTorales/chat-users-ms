@@ -1,5 +1,11 @@
 export class UserNotFoundException extends Error {
-  constructor(_id: string) {
-    super(`User with id ${_id} not found in database`);
+  private readonly username: string;
+  private readonly userId: string;
+
+  constructor(user: { userId?: string; username?: string }) {
+    super(`User with id ${user.userId} not found in database`);
+
+    this.userId = user.userId;
+    this.username = user.username;
   }
 }

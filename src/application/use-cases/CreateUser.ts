@@ -3,7 +3,8 @@ import { User } from '../../domain/entities';
 import { Port } from '../../domain/enums/ports';
 import { IUserRepository } from '../../domain/interfaces';
 import { CreateUserDTO } from '../dtos';
-import { UserAlreadyExistException } from '../../domain/exceptions/UserAlreadyExistException';
+import { UserAlreadyExistException, UserInvalidDataException } from '../../domain/exceptions';
+import { encryptPassword } from '../helpers';
 
 @Injectable()
 export class CreateUser {
@@ -12,19 +13,20 @@ export class CreateUser {
   constructor(@Inject(Port.User) private readonly userRepository: IUserRepository) {}
 
   async exec(data: CreateUserDTO): Promise<User> {
-    this.logger.log('execute "exec" method');
+    try {
+      const { username } = data;
+      const userExist = await this.userRepository.findByFilter({ username });
 
-    const { username } = data;
-    const userExist = await this.userRepository.findByFilter({ username });
+      if (userExist) throw new UserAlreadyExistException({ username });
 
-    if (userExist) throw new UserAlreadyExistException();
+      data.password = await encryptPassword(data.password);
+      const userCreated = await this.userRepository.create(data);
 
-    this.logger.log(`username ${username} available`);
+      return userCreated;
+    } catch (error) {
+      if (error instanceof UserAlreadyExistException) throw error;
 
-    const users = await this.userRepository.create(data);
-
-    this.logger.log('new user created');
-
-    return users;
+      throw new UserInvalidDataException(error);
+    }
   }
 }
