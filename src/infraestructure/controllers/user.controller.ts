@@ -3,7 +3,7 @@ import { UpdateUserDTO } from '../../application/dtos';
 import { CreateUser, GetUser, GetAllUsers, DeleteUser, UpdateUser } from '../../application/use-cases';
 import { UserAlreadyExistException } from '../../domain/exceptions';
 import { CreateUserDTO } from '../../application/dtos/createUser.dto';
-import { UserNotFoundException } from '../../domain/exceptions/UserNotFoundException';
+import { UserNotFoundException, UserInvalidDataException } from '../../domain/exceptions';
 
 @Controller('users')
 export class UserController {
@@ -47,6 +47,7 @@ export class UserController {
       this.logger.error(error?.message);
 
       if (error instanceof UserAlreadyExistException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
+      if (error instanceof UserInvalidDataException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
 
       throw new HttpException('Server error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -69,6 +70,16 @@ export class UserController {
 
   @Delete('/:id')
   async delete(@Param('id') id: string) {
-    return this.deleteUser.exec(id);
+    try {
+      const userDeleted = await this.deleteUser.exec(id);
+
+      return userDeleted;
+    } catch (error) {
+      this.logger.error(error?.message);
+
+      if (error instanceof UserNotFoundException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
+
+      throw new HttpException('Server error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

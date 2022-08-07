@@ -10,12 +10,6 @@ export class GetAllUsers {
   constructor(@Inject(Port.User) private readonly userRepository: IUserRepository) {}
 
   async exec(): Promise<User[]> {
-    this.logger.log('execute "exec" method');
-
-    const users = await this.userRepository.find();
-
-    this.logger.log(`users found: ${users.length}`);
-
-    return users;
+    return await this.userRepository.find();
   }
 }
