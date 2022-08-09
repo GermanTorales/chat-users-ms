@@ -7,13 +7,13 @@ import { DeleteUser } from '../../../../src/application/use-cases';
 import { User } from '../../../../src/domain/entities';
 import { UserNotFoundException } from '../../../../src/domain/exceptions';
 
-describe('CreateUser use-case Test', () => {
+describe('DeleteUserCreateUser use-case Test', () => {
   let userRepository: IUserRepository;
   let deleteUserUseCase: DeleteUser;
   let usersFakeArray: User[];
 
   beforeEach(async () => {
-    usersFakeArray = createFakeUsersArray();
+    usersFakeArray = await createFakeUsersArray();
 
     const module = await Test.createTestingModule({
       providers: [

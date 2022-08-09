@@ -5,13 +5,13 @@ import { createFakeUsersArray } from '../../../factories';
 import { GetAllUsers } from '../../../../src/application/use-cases';
 import { User } from '../../../../src/domain/entities';
 
-describe('CreateUser use-case Test', () => {
+describe('GetAllUsers use-case Test', () => {
   let userRepository: IUserRepository;
   let getAllUsersUseCase: GetAllUsers;
   let usersFakeArray: User[];
 
   beforeEach(async () => {
-    usersFakeArray = createFakeUsersArray();
+    usersFakeArray = await createFakeUsersArray();
 
     const module = await Test.createTestingModule({
       providers: [

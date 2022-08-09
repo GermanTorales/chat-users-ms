@@ -4,7 +4,7 @@ import { Model, FilterQuery } from 'mongoose';
 import { User, UserDocument } from '../../domain/entities';
 import { Entities } from '../../domain/enums/entities.enum';
 import { IDeleteUser, IUserRepository } from '../../domain/interfaces';
-import { ValidationFailedException } from '../exceptions/ValidationFailedException';
+import { ValidationFailedException } from '../exceptions';
 import { invalidDataErrorCatch } from '../helpers';
 
 export class UserRepository implements IUserRepository {
@@ -14,7 +14,9 @@ export class UserRepository implements IUserRepository {
 
   async create(user: User): Promise<User> {
     try {
-      return await this.userModel.create(user);
+      const { name, username, _id } = await this.userModel.create(user);
+
+      return { name, username, _id };
     } catch (error) {
       const invalidData = invalidDataErrorCatch(error);
 
@@ -33,7 +35,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findOne(_id: string): Promise<User> {
-    return this.userModel.findOne({ _id });
+    return this.userModel.findOne({ _id }).select('-password -createdAt -updatedAt -__v');
   }
 
   async findByFilter(filter: FilterQuery<User>): Promise<User> {
@@ -41,7 +43,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async update(_id: string, data: User): Promise<any> {
-    return await this.userModel.updateOne({ _id }, data, { new: true });
+    return await this.userModel.findOneAndUpdate({ _id }, data, { new: true }).select('-password -createdAt -updatedAt -__v');
   }
 
   async delete(_id: string): Promise<IDeleteUser> {
