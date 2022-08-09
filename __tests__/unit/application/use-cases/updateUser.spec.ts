@@ -8,13 +8,13 @@ import { User } from '../../../../src/domain/entities';
 import { UpdateUserDTO } from '../../../../src/application/dtos/updateUser.dto';
 import { UserNotFoundException } from '../../../../src/domain/exceptions';
 
-describe('CreateUser use-case Test', () => {
+describe('UpdateUser use-case Test', () => {
   let userRepository: IUserRepository;
   let updateUserUseCase: UpdateUser;
   let usersFakeArray: User[];
 
   beforeEach(async () => {
-    usersFakeArray = createFakeUsersArray();
+    usersFakeArray = await createFakeUsersArray();
 
     const module = await Test.createTestingModule({
       providers: [
