@@ -1,9 +1,7 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Logger, Param, Post, Put } from '@nestjs/common';
-import { UpdateUserDTO } from '../../application/dtos';
+import { UpdateUserDTO, CreateUserDTO } from '../../application/dtos';
 import { CreateUser, GetUser, GetAllUsers, DeleteUser, UpdateUser } from '../../application/use-cases';
-import { UserAlreadyExistException } from '../../domain/exceptions';
-import { CreateUserDTO } from '../../application/dtos/createUser.dto';
-import { UserNotFoundException, UserInvalidDataException } from '../../domain/exceptions';
+import { UserNotFoundException, UserInvalidDataException, UserAlreadyExistException } from '../../domain/exceptions';
 
 @Controller('users')
 export class UserController {
@@ -22,7 +20,7 @@ export class UserController {
     try {
       const user = await this.getUser.exec(id);
 
-      return user;
+      return { message: `User with ID ${id} found`, data: user };
     } catch (error) {
       this.logger.error(error?.message);
 
@@ -42,7 +40,7 @@ export class UserController {
     try {
       const userCreated = await this.createUser.exec(data);
 
-      return userCreated;
+      return { message: 'New user created', data: userCreated };
     } catch (error) {
       this.logger.error(error?.message);
 
@@ -58,7 +56,7 @@ export class UserController {
     try {
       const user = await this.updateUser.exec(id, data);
 
-      return user;
+      return { message: `User with ID ${id} has been updated`, data: user };
     } catch (error) {
       this.logger.error(error?.message);
 
@@ -73,7 +71,7 @@ export class UserController {
     try {
       const userDeleted = await this.deleteUser.exec(id);
 
-      return userDeleted;
+      return { message: `User with ID ${id} deleted`, data: userDeleted };
     } catch (error) {
       this.logger.error(error?.message);
 

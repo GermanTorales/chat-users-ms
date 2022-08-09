@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserModule } from './domain/modules/user.module';
+import { AuthModule, UserModule } from './domain/modules';
 import { configuration, MongoOptions, EnvObjects } from './infraestructure/configurations';
 import { OrmModule } from './infraestructure/database/orm';
 
@@ -22,6 +22,7 @@ import { OrmModule } from './infraestructure/database/orm';
       inject: [ConfigService],
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [],
 })

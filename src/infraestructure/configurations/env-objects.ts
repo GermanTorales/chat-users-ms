@@ -4,6 +4,7 @@ expandEnvVariables();
 
 export enum EnvObjects {
   MONGO_OPTIONS = 'MongoOptions',
+  JWT_OPTIONS = 'JwtOptions',
 }
 
 export interface MongoOptions {
@@ -13,6 +14,11 @@ export interface MongoOptions {
     useNewUrlParser: boolean;
     useUnifiedTopology: boolean;
   };
+}
+
+export interface JwtOptions {
+  secret: string;
+  expiresIn: string;
 }
 
 export const configuration = (): any => ({
@@ -25,5 +31,9 @@ export const configuration = (): any => ({
         password: process.env.MONGO_PASS,
       },
     },
+  },
+  JwtOptions: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN,
   },
 });
