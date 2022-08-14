@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing';
-import { Port } from '../../../../src/domain/enums/ports';
-import { IUserRepository } from '../../../../src/domain/interfaces';
+import { Port } from '../../../../src/application/enums/ports.enum';
 import { createFakeAuthUserDTO, createUserFake } from '../../../factories';
 import { AuthUser } from '../../../../src/application/use-cases';
 import { AuthUserDTO } from '../../../../src/application/dtos';
 import { User } from '../../../../src/domain/entities';
+import { IUserRepository } from '../../../../src/application/repositories';
 
 describe('AuthUser use-case Test', () => {
   let userRepository: IUserRepository;

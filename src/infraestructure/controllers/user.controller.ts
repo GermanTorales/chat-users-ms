@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Logger, Param, Post, Put } from '@nestjs/common';
-import { UpdateUserDTO, CreateUserDTO } from '../../application/dtos';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Logger, Param, Post, Put, Query } from '@nestjs/common';
+import { UpdateUserDTO, CreateUserDTO, GetAllUsersDTO } from '../../application/dtos';
 import { CreateUser, GetUser, GetAllUsers, DeleteUser, UpdateUser } from '../../application/use-cases';
 import { UserNotFoundException, UserInvalidDataException, UserAlreadyExistException } from '../../domain/exceptions';
 
@@ -31,8 +31,8 @@ export class UserController {
   }
 
   @Get()
-  async all() {
-    return this.getAllUsers.exec();
+  async all(@Query() query: GetAllUsersDTO) {
+    return this.getAllUsers.exec(query);
   }
 
   @Post()

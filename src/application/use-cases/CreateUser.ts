@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { User } from '../../domain/entities';
-import { Port } from '../../domain/enums/ports';
-import { IUserRepository } from '../../domain/interfaces';
+import { Port } from '../enums/ports.enum';
 import { CreateUserDTO } from '../dtos';
 import { UserAlreadyExistException, UserInvalidDataException } from '../../domain/exceptions';
 import { encryptPassword } from '../helpers';
+import { IUserRepository } from '../repositories';
 
 @Injectable()
 export class CreateUser {

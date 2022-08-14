@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthModule, UserModule } from './domain/modules';
-import { configuration, MongoOptions, EnvObjects } from './infraestructure/configurations';
-import { OrmModule } from './infraestructure/database/orm';
+import { AuthModule, UserModule } from './';
+import { configuration, MongoOptions, EnvObjects } from '../configurations';
+import { OrmModule } from '../database/orm';
 
 @Module({
   imports: [

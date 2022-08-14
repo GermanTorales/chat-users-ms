@@ -1,2 +1,2 @@
 export * from './entities.enum';
-export * from './ports';
+export * from './ports.enum';

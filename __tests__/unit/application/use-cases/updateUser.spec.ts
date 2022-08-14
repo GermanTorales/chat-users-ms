@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
-import { Port } from '../../../../src/domain/enums/ports';
-import { IUserRepository } from '../../../../src/domain/interfaces';
+import { Port } from '../../../../src/application/enums/ports.enum';
 import { createFakeUsersArray, updateFakeUser } from '../../../factories';
 import { UpdateUser } from '../../../../src/application/use-cases';
 import { User } from '../../../../src/domain/entities';
 import { UpdateUserDTO } from '../../../../src/application/dtos/updateUser.dto';
 import { UserNotFoundException } from '../../../../src/domain/exceptions';
+import { IUserRepository } from '../../../../src/application/repositories';
 
 describe('UpdateUser use-case Test', () => {
   let userRepository: IUserRepository;

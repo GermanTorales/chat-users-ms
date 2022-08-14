@@ -1,8 +1,8 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { AppModule } from './app.module';
-import { morganSuccessHandler, morganErrorHandler } from './infraestructure/configurations/morgan';
+import { AppModule } from './infraestructure/modules';
+import { morganSuccessHandler, morganErrorHandler } from './infraestructure/configurations';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

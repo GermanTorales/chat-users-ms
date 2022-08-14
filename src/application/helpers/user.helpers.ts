@@ -24,3 +24,5 @@ export const compatePasswords = (currentPassword: string, password: string): Pro
     });
   });
 };
+
+//TODO: Considerar ponerlo como una clase injectable

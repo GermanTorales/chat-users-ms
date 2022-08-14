@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
-import { Port } from '../../../../src/domain/enums/ports';
-import { IUserRepository } from '../../../../src/domain/interfaces';
+import { Port } from '../../../../src/application/enums/ports.enum';
 import { createFakeUsersArray } from '../../../factories';
 import { GetAllUsers } from '../../../../src/application/use-cases';
 import { User } from '../../../../src/domain/entities';
+import { IUserRepository } from '../../../../src/application/repositories';
 
 describe('GetAllUsers use-case Test', () => {
   let userRepository: IUserRepository;
@@ -30,7 +30,7 @@ describe('GetAllUsers use-case Test', () => {
   it('should get all users', async () => {
     jest.spyOn(userRepository, 'find').mockImplementation(async () => usersFakeArray);
 
-    const users = await getAllUsersUseCase.exec();
+    const users = await getAllUsersUseCase.exec({});
 
     expect(users).toHaveLength(usersFakeArray.length);
   });

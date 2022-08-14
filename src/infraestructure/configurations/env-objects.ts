@@ -1,4 +1,4 @@
-import { expandEnvVariables } from '../../domain/helpers';
+import { expandEnvVariables } from '../helpers';
 
 expandEnvVariables();
 

@@ -1,11 +1,12 @@
 import { Test } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
-import { Port } from '../../../../src/domain/enums/ports';
-import { IDeleteUser, IUserRepository } from '../../../../src/domain/interfaces';
+import { Port } from '../../../../src/application/enums/ports.enum';
+import { IDeleteUser } from '../../../../src/application/interfaces';
 import { createFakeUsersArray } from '../../../factories';
 import { DeleteUser } from '../../../../src/application/use-cases';
 import { User } from '../../../../src/domain/entities';
 import { UserNotFoundException } from '../../../../src/domain/exceptions';
+import { IUserRepository } from '../../../../src/application/repositories';
 
 describe('DeleteUserCreateUser use-case Test', () => {
   let userRepository: IUserRepository;
