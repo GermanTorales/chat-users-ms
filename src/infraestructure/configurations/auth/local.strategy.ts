@@ -1,7 +1,7 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
-import { IAuth } from '../../../domain/interfaces';
+import { IAuth } from '../../../application/interfaces';
 import { AuthUser } from '../../../application/use-cases';
 import { InvalidCredentialsException } from '../../../domain/exceptions';
 

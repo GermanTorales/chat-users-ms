@@ -2,10 +2,11 @@ import { Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, FilterQuery } from 'mongoose';
 import { User, UserDocument } from '../../domain/entities';
-import { Entities } from '../../domain/enums/entities.enum';
-import { IDeleteUser, IUserRepository } from '../../domain/interfaces';
+import { Entities } from '../../application/enums/entities.enum';
+import { IDeleteUser } from '../../application/interfaces';
 import { ValidationFailedException } from '../exceptions';
 import { invalidDataErrorCatch } from '../helpers';
+import { IUserRepository } from '../../application/repositories';
 
 export class UserRepository implements IUserRepository {
   private readonly logger = new Logger(UserRepository.name);
@@ -30,8 +31,8 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  async find(): Promise<User[]> {
-    return this.userModel.find({}).select('-password -createdAt -updatedAt -__v');
+  async find(filter: FilterQuery<User>): Promise<User[]> {
+    return this.userModel.find(filter).select('-password -createdAt -updatedAt -__v');
   }
 
   async findOne(_id: string): Promise<User> {
@@ -50,3 +51,5 @@ export class UserRepository implements IUserRepository {
     return await this.userModel.deleteOne({ _id });
   }
 }
+
+// TODO: Mover a application

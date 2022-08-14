@@ -1,7 +1,8 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { User } from '../../domain/entities';
-import { Port } from '../../domain/enums/ports';
-import { IUserRepository } from '../../domain/interfaces';
+import { GetAllUsersDTO } from '../dtos';
+import { Port } from '../enums/ports.enum';
+import { IUserRepository } from '../repositories';
 
 @Injectable()
 export class GetAllUsers {
@@ -9,7 +10,7 @@ export class GetAllUsers {
 
   constructor(@Inject(Port.User) private readonly userRepository: IUserRepository) {}
 
-  async exec(): Promise<User[]> {
-    return await this.userRepository.find();
+  async exec(queryParams: GetAllUsersDTO): Promise<User[]> {
+    return await this.userRepository.find(queryParams);
   }
 }

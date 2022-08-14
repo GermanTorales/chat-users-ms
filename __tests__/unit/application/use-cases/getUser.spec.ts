@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
-import { Port } from '../../../../src/domain/enums/ports';
-import { IUserRepository } from '../../../../src/domain/interfaces';
+import { Port } from '../../../../src/application/enums/ports.enum';
 import { createFakeUsersArray } from '../../../factories';
 import { GetUser } from '../../../../src/application/use-cases';
 import { User } from '../../../../src/domain/entities';
 import { UserNotFoundException } from '../../../../src/domain/exceptions';
+import { IUserRepository } from '../../../../src/application/repositories';
 
 describe('GetUser use-case Test', () => {
   let userRepository: IUserRepository;

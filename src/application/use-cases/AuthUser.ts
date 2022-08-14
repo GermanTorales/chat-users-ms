@@ -1,8 +1,9 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Port } from '../../domain/enums/ports';
-import { IAuth, IUserRepository } from '../../domain/interfaces';
+import { Port } from '../enums/ports.enum';
+import { IAuth } from '../interfaces';
 import { AuthUserDTO } from '../dtos';
 import { compatePasswords } from '../helpers/user.helpers';
+import { IUserRepository } from '../repositories';
 
 @Injectable()
 export class AuthUser {

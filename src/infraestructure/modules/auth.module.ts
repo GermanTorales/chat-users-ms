@@ -2,13 +2,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserSchema } from '../entities';
-import { Entities, Port } from '../enums';
+import { UserSchema } from '../../domain/entities';
+import { Entities, Port } from '../../application/enums';
 import { AuthJwt, AuthUser } from '../../application/use-cases';
-import { OrmModule } from '../../infraestructure/database/orm';
-import { AuthController } from '../../infraestructure/controllers';
-import { UserRepository } from '../../infraestructure/repositories/UserRepository';
-import { configuration, EnvObjects, JwtOptions, JwtStrategy, LocalStrategy } from '../../infraestructure/configurations';
+import { OrmModule } from '../database/orm';
+import { AuthController } from '../controllers';
+import { UserRepository } from '../repositories/UserRepository';
+import { configuration, EnvObjects, JwtOptions, JwtStrategy, LocalStrategy } from '../configurations';
 
 @Module({
   imports: [

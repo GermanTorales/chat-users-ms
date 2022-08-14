@@ -1,9 +1,9 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { UserNotFoundException } from '../../domain/exceptions';
 import { User } from '../../domain/entities';
-import { Port } from '../../domain/enums/ports';
-import { IUserRepository } from '../../domain/interfaces';
+import { Port } from '../enums/ports.enum';
 import { UpdateUserDTO } from '../dtos';
+import { IUserRepository } from '../repositories';
 
 @Injectable()
 export class UpdateUser {
