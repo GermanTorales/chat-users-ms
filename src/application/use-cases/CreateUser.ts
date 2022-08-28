@@ -5,6 +5,7 @@ import { CreateUserDTO } from '../dtos';
 import { UserAlreadyExistException, UserInvalidDataException } from '../../domain/exceptions';
 import { encryptPassword } from '../helpers';
 import { IUserRepository } from '../repositories';
+import { UserPasswordException } from '../exceptions';
 
 @Injectable()
 export class CreateUser {
@@ -19,12 +20,15 @@ export class CreateUser {
 
       if (userExist) throw new UserAlreadyExistException({ username });
 
+      if (data.password !== data.confirmPassword) throw new UserPasswordException('password and confirm password are not equals');
+
       data.password = await encryptPassword(data.password);
       const userCreated = await this.userRepository.create(data);
 
       return userCreated;
     } catch (error) {
       if (error instanceof UserAlreadyExistException) throw error;
+      if (error instanceof UserPasswordException) throw error;
 
       throw new UserInvalidDataException(error);
     }

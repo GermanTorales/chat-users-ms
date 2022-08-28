@@ -1,5 +1,5 @@
-import { User } from '../../domain/entities';
 import { FilterQuery } from 'mongoose';
+import { User } from '../../domain/entities';
 import { IDeleteUser } from '../interfaces';
 
 export interface IUserRepository {
