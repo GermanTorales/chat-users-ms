@@ -5,7 +5,7 @@ import { AppModule } from './infraestructure/modules';
 import { morganSuccessHandler, morganErrorHandler } from './infraestructure/configurations';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: { origin: true, methods: ['GET', 'POST', 'PUT', 'DELETE'] } });
 
   app.use(morganSuccessHandler);
   app.use(morganErrorHandler);
