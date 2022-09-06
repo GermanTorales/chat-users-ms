@@ -1,7 +1,7 @@
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, Logger } from '@nestjs/common';
-import { User } from '../../domain/entities';
-import { IAuthJwt } from '../interfaces';
+import { User } from '../../../domain/entities';
+import { IAuthJwt } from '../../interfaces';
 
 @Injectable()
 export class AuthJwt {

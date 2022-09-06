@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserNotFoundException } from '../../domain/exceptions';
-import { Port } from '../enums/ports.enum';
-import { IDeleteUser } from '../interfaces';
-import { IUserRepository } from '../repositories';
+import { UserNotFoundException } from '../../exceptions';
+import { Port } from '../../enums';
+import { IDeleteUser } from '../../interfaces';
+import { IUserRepository } from '../../repositories';
 
 @Injectable()
 export class DeleteUser {

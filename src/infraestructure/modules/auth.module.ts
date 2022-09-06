@@ -4,22 +4,16 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserSchema } from '../../domain/entities';
 import { Entities, Port } from '../../application/enums';
-import { AuthJwt, AuthUser } from '../../application/use-cases';
+import { AuthJwt, AuthUser, CreateUser } from '../../application/use-cases';
 import { OrmModule } from '../database/orm';
 import { AuthController } from '../controllers';
 import { UserRepository } from '../repositories/UserRepository';
-import { configuration, EnvObjects, JwtOptions, JwtStrategy, LocalStrategy } from '../configurations';
+import { EnvObjects, JwtOptions, JwtStrategy, LocalStrategy } from '../configurations';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      load: [configuration],
-      isGlobal: true,
-      cache: true,
-      expandVariables: true,
-    }),
-    OrmModule.forFeature([{ name: Entities.User, schema: UserSchema }]),
     PassportModule,
+    OrmModule.forFeature([{ name: Entities.User, schema: UserSchema }]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
@@ -35,9 +29,10 @@ import { configuration, EnvObjects, JwtOptions, JwtStrategy, LocalStrategy } fro
   ],
   controllers: [AuthController],
   providers: [
+    CreateUser,
     AuthUser,
-    LocalStrategy,
     AuthJwt,
+    LocalStrategy,
     JwtStrategy,
     {
       provide: Port.User,

@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing';
 import { Port } from '../../../../src/application/enums/ports.enum';
-import { CreateUser } from '../../../../src/application/use-cases/CreateUser';
+import { CreateUser } from '../../../../src/application/use-cases/User/CreateUser';
 import { CreateUserDTO } from '../../../../src/application/dtos';
 import { createFakeUser } from '../../../factories';
-import { UserAlreadyExistException } from '../../../../src/domain/exceptions';
 import { IUserRepository } from '../../../../src/application/repositories';
+import { UserAlreadyExistException } from '../../../../src/application/exceptions';
 
 describe('CreateUser use-case Test', () => {
   let userRepository: IUserRepository;

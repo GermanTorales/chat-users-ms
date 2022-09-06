@@ -1,8 +1,8 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { User } from '../../domain/entities';
-import { GetAllUsersDTO } from '../dtos';
-import { Port } from '../enums/ports.enum';
-import { IUserRepository } from '../repositories';
+import { User } from '../../../domain/entities';
+import { GetAllUsersDTO } from '../../dtos';
+import { Port } from '../../enums';
+import { IUserRepository } from '../../repositories';
 
 @Injectable()
 export class GetAllUsers {
