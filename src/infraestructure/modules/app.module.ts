@@ -21,8 +21,8 @@ import { OrmModule } from '../database/orm';
       },
       inject: [ConfigService],
     }),
-    UserModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [],
 })
