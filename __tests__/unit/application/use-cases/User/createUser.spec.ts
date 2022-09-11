@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
-import { Port } from '../../../../src/application/enums/ports.enum';
-import { CreateUser } from '../../../../src/application/use-cases/User/CreateUser';
-import { CreateUserDTO } from '../../../../src/application/dtos';
-import { createFakeUser } from '../../../factories';
-import { IUserRepository } from '../../../../src/application/repositories';
-import { UserAlreadyExistException } from '../../../../src/application/exceptions';
+import { createFakeUser } from '../../../../factories';
+import { Port } from '../../../../../src/application/enums';
+import { CreateUserDTO } from '../../../../../src/application/dtos';
+import { CreateUser } from '../../../../../src/application/use-cases/User';
+import { IUserRepository } from '../../../../../src/application/repositories';
+import { UserAlreadyExistException, UserInvalidDataException, UserPasswordException } from '../../../../../src/application/exceptions';
 
-describe('CreateUser use-case Test', () => {
+fdescribe('CreateUser use-case Test', () => {
   let userRepository: IUserRepository;
   let createUserUseCase: CreateUser;
   let userFake: CreateUserDTO;
@@ -37,6 +37,8 @@ describe('CreateUser use-case Test', () => {
       updatedAt: new Date().toISOString(),
     }));
 
+    userFake.confirmPassword = userFake.password;
+
     const newUser = await createUserUseCase.exec(userFake);
 
     expect(newUser).toEqual(
@@ -53,5 +55,23 @@ describe('CreateUser use-case Test', () => {
     jest.spyOn(userRepository, 'findByFilter').mockImplementation(async () => userFake);
 
     await expect(createUserUseCase.exec(userFake)).rejects.toThrowError(UserAlreadyExistException);
+  });
+
+  it('should throw error if password are not valid', async () => {
+    jest.spyOn(userRepository, 'create').mockImplementation(async () => {
+      throw new UserInvalidDataException({ message: 'Password are not valid', path: 'password', kind: '' });
+    });
+
+    userFake.confirmPassword = userFake.password;
+
+    await expect(createUserUseCase.exec(userFake)).rejects.toThrowError(UserInvalidDataException);
+  });
+
+  it('should throw error if password and confirmPassword do not match', async () => {
+    jest.spyOn(userRepository, 'findByFilter').mockImplementation(async () => null);
+
+    userFake.confirmPassword = 'otherPass';
+
+    await expect(createUserUseCase.exec(userFake)).rejects.toThrowError(UserPasswordException);
   });
 });
