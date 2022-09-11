@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
-import { Port } from '../../../../src/application/enums/ports.enum';
-import { IDeleteUser } from '../../../../src/application/interfaces';
-import { createFakeUsersArray } from '../../../factories';
-import { DeleteUser } from '../../../../src/application/use-cases';
-import { User } from '../../../../src/domain/entities';
-import { UserNotFoundException } from '../../../../src/domain/exceptions';
-import { IUserRepository } from '../../../../src/application/repositories';
+import { User } from '../../../../../src/domain/entities';
+import { Port } from '../../../../../src/application/enums';
+import { createFakeUsersArray } from '../../../../factories';
+import { DeleteUser } from '../../../../../src/application/use-cases';
+import { IDeleteUser } from '../../../../../src/application/interfaces';
+import { IUserRepository } from '../../../../../src/application/repositories';
+import { UserNotFoundException } from '../../../../../src/application/exceptions';
 
 describe('DeleteUserCreateUser use-case Test', () => {
   let userRepository: IUserRepository;

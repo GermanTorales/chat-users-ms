@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
-import { Port } from '../../../../src/application/enums/ports.enum';
-import { createFakeUsersArray } from '../../../factories';
-import { GetAllUsers } from '../../../../src/application/use-cases';
-import { User } from '../../../../src/domain/entities';
-import { IUserRepository } from '../../../../src/application/repositories';
+import { User } from '../../../../../src/domain/entities';
+import { Port } from '../../../../../src/application/enums';
+import { createFakeUsersArray } from '../../../../factories';
+import { GetAllUsers } from '../../../../../src/application/use-cases';
+import { IUserRepository } from '../../../../../src/application/repositories';
 
 describe('GetAllUsers use-case Test', () => {
   let userRepository: IUserRepository;

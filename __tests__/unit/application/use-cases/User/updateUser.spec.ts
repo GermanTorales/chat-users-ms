@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
-import { Port } from '../../../../src/application/enums/ports.enum';
-import { createFakeUsersArray, updateFakeUser } from '../../../factories';
-import { UpdateUser } from '../../../../src/application/use-cases';
-import { User } from '../../../../src/domain/entities';
-import { UpdateUserDTO } from '../../../../src/application/dtos/updateUser.dto';
-import { UserNotFoundException } from '../../../../src/domain/exceptions';
-import { IUserRepository } from '../../../../src/application/repositories';
+import { User } from '../../../../../src/domain/entities';
+import { Port } from '../../../../../src/application/enums';
+import { UpdateUser } from '../../../../../src/application/use-cases';
+import { createFakeUsersArray, updateFakeUser } from '../../../../factories';
+import { IUserRepository } from '../../../../../src/application/repositories';
+import { UserNotFoundException } from '../../../../../src/application/exceptions';
+import { UpdateUserDTO } from '../../../../../src/application/dtos/updateUser.dto';
 
 describe('UpdateUser use-case Test', () => {
   let userRepository: IUserRepository;

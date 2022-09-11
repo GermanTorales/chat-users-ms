@@ -4,12 +4,18 @@ import { User } from '../../src/domain/entities';
 import { UpdateUserDTO } from '../../src/application/dtos/updateUser.dto';
 import { encryptPassword } from '../../src/application/helpers';
 
-export const createFakeUser = (): CreateUserDTO => ({
-  name: faker.name.firstName(),
-  username: faker.name.firstName(),
-  password: faker.internet.password(),
-  confirmPassword: faker.internet.password(),
-});
+export const createFakeUser = (): CreateUserDTO => {
+  const password = 'SecretPass_2022';
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
+
+  return {
+    name: `${firstName} ${lastName}`,
+    username: faker.internet.userName(firstName, lastName),
+    password,
+    confirmPassword: password,
+  };
+};
 
 export const updateFakeUser = (): UpdateUserDTO => ({
   name: faker.name.firstName(),

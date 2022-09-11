@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { HASH_ROUNDS } from '../constants';
+import { HASH_ROUNDS } from '../../domain/constants';
 
 export const encryptPassword = async (password: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ export const encryptPassword = async (password: string): Promise<string> => {
   });
 };
 
-export const compatePasswords = (currentPassword: string, password: string): Promise<boolean> => {
+export const comparePasswords = (currentPassword: string, password: string): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, currentPassword, function (err, isMatch) {
       if (err) reject(err);
