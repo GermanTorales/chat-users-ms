@@ -5,13 +5,13 @@ import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Connection, connect, Model } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { createFakeUser } from '../../factories';
-import { Entities, Port } from '../../../src/application/enums';
-import { User, UserSchema } from '../../../src/domain/entities';
-import { CreateUserDTO } from '../../../src/application/dtos';
-import { AuthController } from '../../../src/infraestructure/controllers';
-import { AuthJwt, CreateUser } from '../../../src/application/use-cases';
-import { UserRepository } from '../../../src/infraestructure/repositories/UserRepository';
+import { createFakeUser } from '../../../factories';
+import { Entities, Port } from '../../../../src/application/enums';
+import { User, UserSchema } from '../../../../src/domain/entities';
+import { CreateUserDTO } from '../../../../src/application/dtos';
+import { AuthController } from '../../../../src/infraestructure/controllers';
+import { AuthJwt, CreateUser } from '../../../../src/application/use-cases';
+import { UserRepository } from '../../../../src/infraestructure/repositories/UserRepository';
 
 describe('Auth controller', () => {
   let authController: AuthController;
@@ -75,7 +75,7 @@ describe('Auth controller', () => {
     }
   });
 
-  describe('POST /auth/register', () => {
+  describe('register', () => {
     it('should create a new user', async () => {
       const userCreated = await authController.create(fakeUserDTO);
 
@@ -105,6 +105,16 @@ describe('Auth controller', () => {
       fakeUserDTO.password = '123';
 
       await expect(authController.create(fakeUserDTO)).rejects.toThrowError(BadRequestException);
+    });
+  });
+
+  describe('login', () => {
+    it('should log in', async () => {
+      const user = await new userModel(fakeUserDTO).save();
+
+      const userLogged = await authController.login({ user: { username: user.username, _id: user._id } });
+
+      expect(userLogged).toEqual({ token: expect.any(String) });
     });
   });
 });
