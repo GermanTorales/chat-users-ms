@@ -1,12 +1,14 @@
 {
   "moduleDirectories": [
-    "node_modules",
-    "src"
+    "node_modules"
   ],
   "moduleFileExtensions": [
     "js",
     "json",
     "ts"
+  ],
+  "modulePaths": [
+    "<rootDir>/src"
   ],
   "testEnvironment": "node",
   "testRegex": ".spec.ts$",
@@ -17,7 +19,7 @@
   "collectCoverage": true,
   "moduleNameMapper": {
     "^@application(.*)$": "<rootDir>/src/application$1",
-    "^@infrastructure(.*)$": "<rootDir>/src/infrastructure$1",
-    "^@domain(.*)$": "<rootDir>/src/domain$1"
+    "^@domain(.*)$": "<rootDir>/src/domain$1",
+    "^@infraestructure(.*)$": "<rootDir>/src/infraestructure$1"
   }
 }
