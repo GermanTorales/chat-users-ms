@@ -1,4 +1,4 @@
-import { Controller, Logger, Post, UseGuards, Request, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Logger, Post, UseGuards, Request, Body, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { UserAlreadyExistException, UserInvalidDataException, UserPasswordException } from '../../application/exceptions';
 import { CreateUserDTO } from '../../application/dtos';
 import { AuthJwt, CreateUser } from '../../application/use-cases';
@@ -19,11 +19,11 @@ export class AuthController {
     } catch (error) {
       this.logger.error(error?.message);
 
-      if (error instanceof UserAlreadyExistException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
-      if (error instanceof UserInvalidDataException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
-      if (error instanceof UserPasswordException) throw new HttpException(error?.message, HttpStatus.BAD_REQUEST);
+      if (error instanceof UserAlreadyExistException) throw new BadRequestException(error?.message);
+      if (error instanceof UserInvalidDataException) throw new BadRequestException(error?.message);
+      if (error instanceof UserPasswordException) throw new BadRequestException(error?.message);
 
-      throw new HttpException('Server error', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new InternalServerErrorException('Server error');
     }
   }
 
