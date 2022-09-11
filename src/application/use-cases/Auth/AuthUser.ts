@@ -1,9 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Port } from '../../enums/ports.enum';
+import { Port } from '../../enums';
 import { IAuth } from '../../interfaces';
 import { AuthUserDTO } from '../../dtos';
-import { compatePasswords } from '../../helpers/user.helpers';
+import { comparePasswords } from '../../helpers';
 import { IUserRepository } from '../../repositories';
+import { User } from '../../../domain/entities';
 
 @Injectable()
 export class AuthUser {
@@ -13,11 +14,11 @@ export class AuthUser {
 
   async exec(data: AuthUserDTO): Promise<IAuth> {
     const { username, password } = data;
-    const user = await this.userRepository.findByFilter({ username });
+    const user: User = await this.userRepository.findByFilter({ username });
 
     if (!user) return null;
 
-    const isMatch = await compatePasswords(user.password, password);
+    const isMatch = await comparePasswords(user.password, password);
 
     if (!isMatch) return null;
 
