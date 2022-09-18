@@ -3,14 +3,14 @@ import { Port } from '../../../../../src/application/enums';
 import { createFakeAuthUserDTO, createUserFake } from '../../../../factories';
 import { AuthUser } from '../../../../../src/application/use-cases';
 import { AuthUserDTO } from '../../../../../src/application/dtos';
-import { User } from '../../../../../src/domain/entities';
 import { IUserRepository } from '../../../../../src/application/repositories';
+import { IUser } from '../../../../../src/application/interfaces';
 
 describe('AuthUser use-case Test', () => {
   let userRepository: IUserRepository;
   let authUserUseCase: AuthUser;
   let userFakeDTO: AuthUserDTO;
-  let userFake: User;
+  let userFake: IUser;
 
   beforeEach(async () => {
     userFakeDTO = createFakeAuthUserDTO();

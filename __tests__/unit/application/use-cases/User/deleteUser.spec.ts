@@ -1,17 +1,16 @@
 import { Test } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
-import { User } from '../../../../../src/domain/entities';
 import { Port } from '../../../../../src/application/enums';
 import { createFakeUsersArray } from '../../../../factories';
 import { DeleteUser } from '../../../../../src/application/use-cases';
-import { IDeleteUser } from '../../../../../src/application/interfaces';
+import { IDeleteUser, IUser } from '../../../../../src/application/interfaces';
 import { IUserRepository } from '../../../../../src/application/repositories';
 import { UserNotFoundException } from '../../../../../src/application/exceptions';
 
 describe('DeleteUserCreateUser use-case Test', () => {
   let userRepository: IUserRepository;
   let deleteUserUseCase: DeleteUser;
-  let usersFakeArray: User[];
+  let usersFakeArray: IUser[];
 
   beforeEach(async () => {
     usersFakeArray = await createFakeUsersArray();

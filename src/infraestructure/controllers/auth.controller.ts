@@ -1,3 +1,4 @@
+import { HttpCode, HttpStatus } from '@nestjs/common';
 import { Controller, Logger, Post, UseGuards, Request, Body, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { UserAlreadyExistException, UserInvalidDataException, UserPasswordException } from '../../application/exceptions';
 import { CreateUserDTO } from '../../application/dtos';
@@ -29,7 +30,10 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   async login(@Request() req) {
-    return this.authJwt.exec(req.user);
+    const { token } = await this.authJwt.exec(req.user);
+
+    return { message: 'Successful login', data: { token } };
   }
 }

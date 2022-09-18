@@ -7,11 +7,11 @@ import { Connection, connect, Model } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { createFakeUser } from '../../../factories';
 import { Entities, Port } from '../../../../src/application/enums';
-import { User, UserSchema } from '../../../../src/domain/entities';
 import { CreateUserDTO } from '../../../../src/application/dtos';
 import { AuthController } from '../../../../src/infraestructure/controllers';
 import { AuthJwt, CreateUser } from '../../../../src/application/use-cases';
 import { UserRepository } from '../../../../src/infraestructure/repositories/UserRepository';
+import { User, UserSchema } from '../../../../src/domain/entities';
 
 describe('Auth controller', () => {
   let authController: AuthController;
@@ -24,7 +24,7 @@ describe('Auth controller', () => {
     mongod = await MongoMemoryServer.create();
     const uri = mongod.getUri();
     mongoConnection = (await connect(uri)).connection;
-    userModel = mongoConnection.model(Entities.User, UserSchema);
+    userModel = mongoConnection.model(User.name, UserSchema);
 
     const app: TestingModule = await Test.createTestingModule({
       imports: [
@@ -114,7 +114,7 @@ describe('Auth controller', () => {
 
       const userLogged = await authController.login({ user: { username: user.username, _id: user._id } });
 
-      expect(userLogged).toEqual({ token: expect.any(String) });
+      expect(userLogged.data).toEqual({ token: expect.any(String) });
     });
   });
 });
