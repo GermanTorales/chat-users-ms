@@ -1,16 +1,16 @@
 import { Test } from '@nestjs/testing';
 import { faker } from '@faker-js/faker';
-import { User } from '../../../../../src/domain/entities';
 import { Port } from '../../../../../src/application/enums';
 import { createFakeUsersArray } from '../../../../factories';
 import { GetUser } from '../../../../../src/application/use-cases';
 import { IUserRepository } from '../../../../../src/application/repositories';
 import { UserNotFoundException } from '../../../../../src/application/exceptions';
+import { IUser } from '../../../../../src/application/interfaces';
 
 describe('GetUser use-case Test', () => {
   let userRepository: IUserRepository;
   let getUserUseCase: GetUser;
-  let usersFakeArray: User[];
+  let usersFakeArray: IUser[];
 
   beforeEach(async () => {
     usersFakeArray = await createFakeUsersArray();
@@ -30,8 +30,8 @@ describe('GetUser use-case Test', () => {
   });
 
   it('should get user by ID', async () => {
-    jest.spyOn(userRepository, 'findOne').mockImplementation(async (_id: string): Promise<User> => {
-      const user = usersFakeArray.find(user => user._id === _id);
+    jest.spyOn(userRepository, 'findOne').mockImplementation(async (_id: string): Promise<IUser> => {
+      const user: IUser = usersFakeArray.find(user => user._id === _id);
 
       return user;
     });
@@ -43,7 +43,7 @@ describe('GetUser use-case Test', () => {
   });
 
   it('should throw error if user not found', async () => {
-    jest.spyOn(userRepository, 'findOne').mockImplementation(async (): Promise<User> => null);
+    jest.spyOn(userRepository, 'findOne').mockImplementation(async (): Promise<IUser> => null);
 
     const randomUser = usersFakeArray[faker.datatype.number({ min: 0, max: usersFakeArray.length - 1 })];
 

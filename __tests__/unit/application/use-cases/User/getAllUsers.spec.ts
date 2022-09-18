@@ -1,14 +1,14 @@
 import { Test } from '@nestjs/testing';
-import { User } from '../../../../../src/domain/entities';
 import { Port } from '../../../../../src/application/enums';
 import { createFakeUsersArray } from '../../../../factories';
 import { GetAllUsers } from '../../../../../src/application/use-cases';
 import { IUserRepository } from '../../../../../src/application/repositories';
+import { IUser } from '../../../../../src/application/interfaces';
 
 describe('GetAllUsers use-case Test', () => {
   let userRepository: IUserRepository;
   let getAllUsersUseCase: GetAllUsers;
-  let usersFakeArray: User[];
+  let usersFakeArray: IUser[];
 
   beforeEach(async () => {
     usersFakeArray = await createFakeUsersArray();
