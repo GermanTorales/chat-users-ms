@@ -1,7 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, Logger } from '@nestjs/common';
-import { User } from '../../../domain/entities';
-import { IAuthJwt } from '../../interfaces';
+import { IAuthJwt, IUser } from '../../interfaces';
 
 @Injectable()
 export class AuthJwt {
@@ -9,7 +8,7 @@ export class AuthJwt {
 
   constructor(private jwtService: JwtService) {}
 
-  async exec(data: User): Promise<IAuthJwt> {
+  async exec(data: IUser): Promise<IAuthJwt> {
     const { username, _id } = data;
 
     const payload = { username, sub: _id };

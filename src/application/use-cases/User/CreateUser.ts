@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { User } from '../../../domain/entities';
 import { Port } from '../../enums/ports.enum';
 import { CreateUserDTO } from '../../dtos';
 import { UserAlreadyExistException, UserInvalidDataException } from '../../exceptions';
 import { IUserRepository } from '../../repositories';
 import { UserPasswordException } from '../../exceptions';
+import { IUser } from '../../../application/interfaces';
 
 @Injectable()
 export class CreateUser {
@@ -12,7 +12,7 @@ export class CreateUser {
 
   constructor(@Inject(Port.User) private readonly userRepository: IUserRepository) {}
 
-  async exec(data: CreateUserDTO): Promise<User> {
+  async exec(data: CreateUserDTO): Promise<IUser> {
     try {
       const { username, password, confirmPassword } = data;
 

@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
 import { OrmModule } from '../database/orm';
-import { UserSchema } from '../../domain/entities';
-import { Entities } from '../../application/enums/entities.enum';
+import { User, UserSchema } from '../../domain/entities';
 import { UserController } from '../controllers/user.controller';
 import { UserRepository } from '../repositories/UserRepository';
 import { GetAllUsers, CreateUser, GetUser, DeleteUser, UpdateUser } from '../../application/use-cases';
 import { Port } from '../../application/enums';
 
 @Module({
-  imports: [OrmModule.forFeature([{ name: Entities.User, schema: UserSchema }])],
+  imports: [OrmModule.forFeature([{ name: User.name, schema: UserSchema }])],
   controllers: [UserController],
   providers: [
     GetAllUsers,
